@@ -12,9 +12,9 @@
       {{^signup_success}}
       <form action="/login/attemptSignup" method="post">
         <label for="username">Username:</label>
-        <input type="text" name="username"> <br /> <br />
+        <input type="text" name="username" placeholder="At least 6 characters" required> <br /> <br />
         <label for="password">Password:</label>
-        <input type="password" name="password"> <br /> <br />
+        <input type="password" name="password" placeholder="At least 6 characters" required> <br /> <br />
         <input type="submit" value="Sign-up">
       </form>
       {{/signup_success}}
