@@ -42,9 +42,7 @@ router.get("/signup", async function(req, res)
   res.render("signup", req.TPL);
 });
 
-// Attempts to signup a new user
-router.post("/attemptSignup", async function(req, res)
-{Signup form submission
+// Signup form submission
 router.post("/attemptSignup", async function(req, res)
 {
   var username = req.body.username ? req.body.username.trim() : "";
@@ -53,14 +51,15 @@ router.post("/attemptSignup", async function(req, res)
   if (username.length < 6 || password.length < 6) {
     req.session.signup_error = "Username/password cannot be less than 6 characters in length!";
     res.redirect("/login/signup");
-  } else {nt created!";
+  } else {
+    await UsersModel.createUser(username, password, "member");
+    req.session.signup_success = "User account created!";
     res.redirect("/login/signup");
   }
 });
 
-// Logout a user
-// - Destroys the session key username that is used to determine if a user
-// is log
+// Logout
+router.get("/logout", function(req, res) {
   delete(req.session.username);
   delete(req.session.userlevel);
   res.redirect("/home");
