@@ -24,4 +24,10 @@ async function findUserByUsernameAndPassword(username, password)
   return null;
 }
 
-module.exports = {findUserByUsernameAndPassword};
+// Create a new user with a username, password, and access level
+async function createUser(username, password, level)
+{
+  await db.run("INSERT INTO Users VALUES (?,?,?)", [username, password, level]);
+}
+
+module.exports = {findUserByUsernameAndPassword, createUser};

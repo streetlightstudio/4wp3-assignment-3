@@ -42,6 +42,37 @@ router.post("/attemptlogin", async function(req, res)
 
 });
 
+// Displays the signup page
+router.get("/signup", async function(req, res)
+{
+  // if we had an error or success message, display it, clear it from session
+  req.TPL.signup_error = req.session.signup_error;
+  req.TPL.signup_success = req.session.signup_success;
+  req.session.signup_error = "";
+  req.session.signup_success = "";
+
+  // render the signup page
+  res.render("signup", req.TPL);
+});
+
+// Attempts to signup a new user
+router.post("/attemptSignup", async function(req, res)
+{
+  var username = req.body.username;
+  var password = req.body.password;
+
+  // Check if username and password are both at least 6 characters
+  if (username.length < 6 || password.length < 6) {
+    req.session.signup_error = "Username/password cannot be less than 6 characters in length!";
+    res.redirect("/login/signup");
+  } else {
+    // Create the new user with member level
+    await UsersModel.createUser(username, password, "member");
+    req.session.signup_success = "User account created!";
+    res.redirect("/login/signup");
+  }
+});
+
 // Logout a user
 // - Destroys the session key username that is used to determine if a user
 // is logged in, re-directs them to the home page.
