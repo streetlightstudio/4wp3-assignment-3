@@ -17,4 +17,20 @@ router.get("/", async function(req, res)
   res.render("editors", req.TPL);
 });
 
+// Delete an article
+router.get("/deleteArticle", async function(req, res)
+{
+  var title = req.query.title;
+  await ArticlesModel.deleteArticle(title);
+  res.redirect("/editors");
+});
+
+// Delete a user
+router.get("/deleteUser", async function(req, res)
+{
+  var username = req.query.username;
+  await UsersModel.deleteUser(username);
+  res.redirect("/editors");
+});
+
 module.exports = router;

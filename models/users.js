@@ -48,4 +48,13 @@ async function getAllUsers()
   return results;
 }
 
-module.exports = {findUserByUsernameAndPassword, createUser, getAllUsers};
+// Delete a user by username and all articles authored by that user
+async function deleteUser(username)
+{
+  // Delete all articles authored by this user
+  await db.run("DELETE FROM Articles WHERE username = ?", [username]);
+  // Delete the user
+  await db.run("DELETE FROM Users WHERE username = ?", [username]);
+}
+
+module.exports = {findUserByUsernameAndPassword, createUser, getAllUsers, deleteUser};
