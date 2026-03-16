@@ -60,8 +60,8 @@ router.get("/signup", async function(req, res)
 // Attempts to signup a new user
 router.post("/attemptSignup", async function(req, res)
 {
-  var username = req.body.username;
-  var password = req.body.password;
+  var username = req.body.username ? req.body.username.trim() : "";
+  var password = req.body.password ? req.body.password.trim() : "";
 
   // Check if username and password are both at least 6 characters
   if (username.length < 6 || password.length < 6) {
