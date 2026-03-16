@@ -1,5 +1,6 @@
 const sqlite3 = require("sqlite3").verbose();
 const sqlite = require("sqlite");
+const bcrypt = require("bcrypt");
 
 async function init() {
   try {
@@ -17,17 +18,27 @@ init();
 // Find a user by username and password
 async function findUserByUsernameAndPassword(username, password)
 {
-  let results = await db.all("SELECT * FROM Users WHERE username = ? AND password = ?", [username, password]);
+  // First, find the user by username
+  let results = await db.all("SELECT * FROM Users WHERE username = ?", [username]);
+  
   if (results.length > 0) {
-    return results[0];
+    var user = results[0];
+    // Compare the entered password with the hashed password using bcrypt
+    var passwordMatch = await bcrypt.compare(password, user.password);
+    if (passwordMatch) {
+      return user;
+    }
   }
+  
   return null;
 }
 
 // Create a new user with a username, password, and access level
 async function createUser(username, password, level)
 {
-  await db.run("INSERT INTO Users VALUES (?,?,?)", [username, password, level]);
+  // Hash the password before storing it
+  var hashedPassword = await bcrypt.hash(password, 10);
+  await db.run("INSERT INTO Users VALUES (?,?,?)", [username, hashedPassword, level]);
 }
 
 module.exports = {findUserByUsernameAndPassword, createUser};
