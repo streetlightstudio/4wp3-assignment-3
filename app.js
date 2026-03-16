@@ -77,10 +77,13 @@ app.use("/members", function (req, res, next) {
   else res.redirect("/home");
 });
 
-// protect access to the editors page, re-direct user to home page if nobody is logged in
+// protect access to the editors page, only editor-level users can access
 app.use("/editors", function (req, res, next) {
-  if (req.session.username) next();
-  else res.redirect("/home");
+  if (req.session.username && req.session.userlevel == "editor") {
+    next();
+  } else {
+    res.redirect("/home");
+  }
 });
 
 app.use("/home", require("./controllers/home"));

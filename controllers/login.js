@@ -25,6 +25,8 @@ router.post("/attemptlogin", async function(req, res)
   if (user) {
     // set a session key username to login the user
     req.session.username = req.body.username;
+    // store the user's access level in the session
+    req.session.userlevel = user.level;
 
     // redirect to the appropriate page based on the user's level
     if (user.level == "editor") {
@@ -79,6 +81,7 @@ router.post("/attemptSignup", async function(req, res)
 router.get("/logout", async function(req, res)
 {
   delete(req.session.username);
+  delete(req.session.userlevel);
   res.redirect("/home");
 });
 
