@@ -10,34 +10,34 @@
       
       <h3>Users</h3>
       <table border="1" style="width: 100%; border-collapse: collapse;">
-        <tr>
-          <th>Username</th>
-          <th>Password</th>
-          <th>Access Level</th>
-          <th>Delete</th>
+        <tr style="background-color: #f2f2f2;">
+          <th style="padding: 12px;">Username</th>
+          <th style="padding: 12px;">Password</th>
+          <th style="padding: 12px;">Access Level</th>
+          <th style="padding: 12px;">Delete</th>
         </tr>
         {{#users}}
         <tr>
-          <td>{{username}}</td>
-          <td>{{password}}</td>
-          <td>{{level}}</td>
-          <td><a href="/editors/deleteUser?username={{username}}">D</a></td>
+          <td style="padding: 12px;">{{username}}</td>
+          <td style="padding: 12px;">{{password}}</td>
+          <td style="padding: 12px;">{{level}}</td>
+          <td style="padding: 12px;"><a href="/editors/deleteUser?username={{username}}" style="color: red;">D</a></td>
         </tr>
         {{/users}}
       </table>
       
       <h3>Articles</h3>
       <table border="1" style="width: 100%; border-collapse: collapse;">
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Delete</th>
+        <tr style="background-color: #f2f2f2;">
+          <th style="padding: 12px;">Title</th>
+          <th style="padding: 12px;">Author</th>
+          <th style="padding: 12px;">Delete</th>
         </tr>
         {{#articles}}
         <tr>
-          <td>{{title}}</td>
-          <td>{{username}}</td>
-          <td><a href="/editors/deleteArticle?title={{title}}">D</a></td>
+          <td style="padding: 12px;">{{title}}</td>
+          <td style="padding: 12px;">{{username}}</td>
+          <td style="padding: 12px;"><a href="/editors/deleteArticle?title={{title}}" style="color: red;">D</a></td>
         </tr>
         {{/articles}}
       </table>
