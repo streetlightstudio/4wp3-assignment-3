@@ -17,21 +17,34 @@ init();
 // Return all of the articles
 async function getAllArticles()
 {
-  let results = await db.all("SELECT * FROM Articles");
-  return results;
+  try {
+    let results = await db.all("SELECT * FROM Articles");
+    return results;
+  } catch(err) {
+    console.error("Error getting articles:", err);
+    return [];
+  }
 }
 
 // Create a new article given a title, content and username
 async function createArticle(article,username)
 {
-  await db.run("INSERT INTO Articles VALUES (?,?,?)",
-         [article.title, username, article.content]);
+  try {
+    await db.run("INSERT INTO Articles VALUES (?,?,?)",
+           [article.title, username, article.content]);
+  } catch(err) {
+    console.error("Error creating article:", err);
+  }
 }
 
 // Delete an article by title
 async function deleteArticle(title)
 {
-  await db.run("DELETE FROM Articles WHERE title = ?", [title]);
+  try {
+    await db.run("DELETE FROM Articles WHERE title = ?", [title]);
+  } catch(err) {
+    console.error("Error deleting article:", err);
+  }
 }
 
 module.exports = {getAllArticles, createArticle, deleteArticle};
