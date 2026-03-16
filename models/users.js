@@ -41,4 +41,11 @@ async function createUser(username, password, level)
   await db.run("INSERT INTO Users VALUES (?,?,?)", [username, hashedPassword, level]);
 }
 
-module.exports = {findUserByUsernameAndPassword, createUser};
+// Return all users
+async function getAllUsers()
+{
+  let results = await db.all("SELECT * FROM Users");
+  return results;
+}
+
+module.exports = {findUserByUsernameAndPassword, createUser, getAllUsers};
